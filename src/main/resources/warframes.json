@@ -1,0 +1,85 @@
+[
+{
+  "_id": {
+    "$oid": "691f70a20cfa8399329dc29d"
+  },
+  "warframe_id": 2,
+  "name": "Titania",
+  "health": 250,
+  "armor": 100,
+  "energy": 200,
+  "sprint_speed": 1.15,
+  "passive": "Titania generates Health for herself and nearby allies every time she casts an Ability."
+},
+{
+  "_id": {
+    "$oid": "691f70a20cfa8399329dc29e"
+  },
+  "warframe_id": 3,
+  "name": "Wukong",
+  "health": 300,
+  "armor": 200,
+  "energy": 100,
+  "sprint_speed": 1.1,
+  "passive": "After taking fatal damage Wukong automatically uses one of his mastered survival techniques. These techniques can only be invoked three times per mission."
+},
+{
+  "_id": {
+    "$oid": "691f70a20cfa8399329dc29f"
+  },
+  "warframe_id": 4,
+  "name": "Mesa",
+  "health": 200,
+  "armor": 100,
+  "energy": 200,
+  "sprint_speed": 1.15,
+  "passive": "Shoot dual-wielded sidearms 15% faster and reload single-handed sidearms 25% more rapidly. Gain 50 Bonus Health when not using Melee Weapons."
+},
+{
+  "_id": {
+    "$oid": "691f70a20cfa8399329dc2a0"
+  },
+  "warframe_id": 5,
+  "name": "Frost",
+  "health": 300,
+  "armor": 200,
+  "energy": 100,
+  "sprint_speed": 1.05,
+  "passive": "Cold Status Effects from Frost's Abilities have their duration increased by 100%. Frost gains 50 Armor per enemy inflicted with Cold Status within 15m."
+},
+{
+  "_id": {
+    "$oid": "691f70a20cfa8399329dc2a1"
+  },
+  "warframe_id": 6,
+  "name": "Mirage",
+  "health": 300,
+  "armor": 105,
+  "energy": 150,
+  "sprint_speed": 1.2,
+  "passive": "Sliding lasts 85% longer and acrobatic maneuvers are 50% faster."
+},
+{
+  "_id": {
+    "$oid": "691f70a20cfa8399329dc2a2"
+  },
+  "warframe_id": 7,
+  "name": "Nezha",
+  "health": 250,
+  "armor": 175,
+  "energy": 150,
+  "sprint_speed": 1.15,
+  "passive": "Slide 60% faster and go 35% farther."
+},
+{
+  "_id": {
+    "$oid": "691f70a20cfa8399329dc2a3"
+  },
+  "warframe_id": 8,
+  "name": "Koumei",
+  "health": 300,
+  "armor": 225,
+  "energy": 125,
+  "sprint_speed": 1.1,
+  "passive": "Every 60 seconds, one of Koumei's weapons will inflict random Status Effects for 60 seconds."
+}]
