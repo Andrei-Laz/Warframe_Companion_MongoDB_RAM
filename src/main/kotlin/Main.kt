@@ -1,151 +1,101 @@
 import java.util.Scanner
-import java.io.File
-import org.bson.Document
-import org.json.JSONArray
-import org.bson.json.JsonWriterSettings
-
-import de.bwaldvogel.mongo.MongoServer
-import de.bwaldvogel.mongo.backend.memory.MemoryBackend
-
-import com.mongodb.client.MongoClients
-import com.mongodb.client.MongoClient
-import com.mongodb.client.MongoCollection
-import com.mongodb.client.model.Filters
-import com.mongodb.client.model.Projections
-import com.mongodb.client.model.Aggregates
-
-//variables globales definidas sin inicializar
-lateinit var servidor: MongoServer
-lateinit var cliente: MongoClient
-lateinit var uri: String
-lateinit var coleccionPlantas: MongoCollection<Document>
-
-//BD y colección con la que se trabajará
-const val NOM_BD = "florabotanica"
-const val NOM_COLECCION = "plantas"
-
-// Función para conectar a la BD
-fun conectarBD() {
-    servidor = MongoServer(MemoryBackend())
-    val address = servidor.bind()
-    uri = "mongodb://${address.hostName}:${address.port}"
-
-    cliente = MongoClients.create(uri)
-    coleccionPlantas = cliente.getDatabase(NOM_BD).getCollection(NOM_COLECCION)
-
-    println("Servidor MongoDB en memoria iniciado en $uri")
-}
-
-// Función para desconectar a la BD
-fun desconectarBD() {
-    cliente.close()
-    servidor.shutdown()
-    println("Servidor MongoDB en memoria finalizado")
-}
 
 fun main() {
     conectarBD()
-    importarBD("src/main/resources/florabotanica_plantas.json", coleccionPlantas)
+    importarBD("src/main/resources/warframes.json", coleccionWarframes)
 
-    menu()
+    mainMenu()
 
-    exportarBD(coleccionPlantas,"src/main/resources/florabotanica_plantas.json")
+    exportarBD(coleccionWarframes,"src/main/resources/warframes.json")
     desconectarBD()
 }
 
-// ****************
-// **** MENÚ   ****
-// ****************
+fun mainMenu() {
+    val scanner = Scanner(System.`in`)
+    var option: Int
 
-fun menu(){
-    //llamada a listar todas las plantas de la BD
-    mostrarPlantas()
-}
+    do {
+        println(
+            """
+            ==== WARFRAME COMPANION MENU ====
+            1. Warframe database menu
+            2. Weapon database menu
+            3. Mods database menu
+            0. Salir
+            =================================
+            Elige una opción:
+            """.trimIndent()
+        )
 
-fun mostrarPlantas() {
-    println();
-    println("**** Listado de plantas:")
-    coleccionPlantas.find().forEach { doc ->
-        val id = doc.getInteger("id_planta")
-        val nombre_comun = doc.getString("nombre_comun")
-        val nombre_cientifico = doc.getString("nombre_cientifico")
-        val altura = doc.getInteger("altura")
-        println("[$id] $nombre_comun ($nombre_cientifico): ${altura} cm")
-    }
-}
+        print("> ")
+        option = scanner.nextLine().toIntOrNull() ?: -1
 
-fun importarBD(rutaJSON: String, coleccion: MongoCollection<Document>) {
-    println("Iniciando importación de datos desde JSON...")
+        when (option) {
+            1 -> {
+                warframeMenu()
+            }
 
-    val jsonFile = File(rutaJSON)
-    if (!jsonFile.exists()) {
-        println("No se encontró el archivo JSON a importar")
-        return
-    }
+            2 -> {
+                weaponMenu()
+            }
 
-    // Leer JSON del archivo
-    val jsonText = try {
-        jsonFile.readText()
-    } catch (e: Exception) {
-        println("Error leyendo el archivo JSON: ${e.message}")
-        return
-    }
+            3 -> {
+                modMenu()
+            }
 
-    val array = try {
-        JSONArray(jsonText)
-    } catch (e: Exception) {
-        println("Error al parsear JSON: ${e.message}")
-        return
-    }
+            0 -> println("Saliendo del menú...")
 
-    // Convertir JSON a Document y eliminar _id si existe
-    val documentos = mutableListOf<Document>()
-    for (i in 0 until array.length()) {
-        val doc = Document.parse(array.getJSONObject(i).toString())
-        doc.remove("_id")  // <-- eliminar _id para que MongoDB genere uno nuevo
-        documentos.add(doc)
-    }
-
-    if (documentos.isEmpty()) {
-        println("El archivo JSON está vacío")
-        return
-    }
-
-    val db = cliente.getDatabase(NOM_BD)
-
-    val nombreColeccion =coleccion.namespace.collectionName
-
-    // Borrar colección si existe
-    if (db.listCollectionNames().contains(nombreColeccion)) {
-        db.getCollection(nombreColeccion).drop()
-        println("Colección '$nombreColeccion' eliminada antes de importar.")
-    }
-
-    // Insertar documentos
-    try {
-        coleccion.insertMany(documentos)
-        println("Importación completada: ${documentos.size} documentos de $nombreColeccion.")
-    } catch (e: Exception) {
-        println("Error importando documentos: ${e.message}")
-    }
-}
-
-fun exportarBD(coleccion: MongoCollection<Document>, rutaJSON: String) {
-    val settings = JsonWriterSettings.builder().indent(true).build()
-    val file = File(rutaJSON)
-    file.printWriter().use { out ->
-        out.println("[")
-        val cursor = coleccion.find().iterator()
-        var first = true
-        while (cursor.hasNext()) {
-            if (!first) out.println(",")
-            val doc = cursor.next()
-            out.print(doc.toJson(settings))
-            first = false
+            else -> println("Opción inválida, intenta de nuevo.")
         }
-        out.println("]")
-        cursor.close()
-    }
 
-    println("Exportación de ${coleccion.namespace.collectionName} completada")
+    } while (option != 0)
+}
+
+fun warframeMenu() {
+    val scanner = Scanner(System.`in`)
+    var option: Int
+
+    do {
+        println(
+            """
+
+            ==== WARFRAME DATABASE MENU ====
+            1. Listar Warframes
+            2. Consultar Warframes con filtro
+            3. Consultar Warframes con filtro (2)
+            4. Consultar promedios/máximos warframes
+            5. Insertar nuevo Warframe
+            6. Actualizar Warframe
+            7. Eliminar Warframe
+            0. Salir
+            =================================
+            Elige una opción:
+            """.trimIndent()
+        )
+
+        print("> ")
+        option = scanner.nextLine().toIntOrNull() ?: -1
+
+        when (option) {
+            1 -> WarframesDAO.mostrarWarframes()
+            2 -> WarframesDAO.consultarWarframesConFiltros()
+            3 -> WarframesDAO.proyeccionesWarframes()
+            4 -> WarframesDAO.agregacionesWarframes()
+            5 -> WarframesDAO.insertarWarframe()
+            6 -> WarframesDAO.actualizarVidaWarframe()
+            7 -> WarframesDAO.eliminarWarframe()
+
+            0 -> println("Saliendo del menú...")
+
+            else -> println("Opción inválida, intenta de nuevo.")
+        }
+    } while (option != 0)
+}
+
+fun modMenu() {
+
+}
+
+fun weaponMenu() {
+
 }

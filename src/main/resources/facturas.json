@@ -1,0 +1,91 @@
+[
+{
+  "_id": {
+    "$oid": "693831f201eb26014157655b"
+  },
+  "fecha": "2025-11-28",
+  "id_factura": 1,
+  "precio": 13,
+  "cantidad": 3,
+  "id_planta": 1
+},
+{
+  "_id": {
+    "$oid": "693831f201eb26014157655c"
+  },
+  "fecha": "2025-11-28",
+  "id_factura": 1,
+  "precio": 7,
+  "cantidad": 2,
+  "id_planta": 3
+},
+{
+  "_id": {
+    "$oid": "693831f201eb26014157655d"
+  },
+  "fecha": "2025-11-28",
+  "id_factura": 1,
+  "precio": 5,
+  "cantidad": 1,
+  "id_planta": 5
+},
+{
+  "_id": {
+    "$oid": "693831f201eb26014157655e"
+  },
+  "fecha": "2025-11-28",
+  "id_factura": 2,
+  "precio": 35,
+  "cantidad": 1,
+  "id_planta": 2
+},
+{
+  "_id": {
+    "$oid": "693831f201eb26014157655f"
+  },
+  "fecha": "2025-11-28",
+  "id_factura": 2,
+  "precio": 9,
+  "cantidad": 2,
+  "id_planta": 4
+},
+{
+  "_id": {
+    "$oid": "693831f201eb260141576560"
+  },
+  "fecha": "2025-11-29",
+  "id_factura": 3,
+  "precio": 13,
+  "cantidad": 1,
+  "id_planta": 1
+},
+{
+  "_id": {
+    "$oid": "693831f201eb260141576561"
+  },
+  "fecha": "2025-11-29",
+  "id_factura": 3,
+  "precio": 7,
+  "cantidad": 3,
+  "id_planta": 3
+},
+{
+  "_id": {
+    "$oid": "693831f201eb260141576562"
+  },
+  "fecha": "2025-11-29",
+  "id_factura": 4,
+  "precio": 35,
+  "cantidad": 2,
+  "id_planta": 2
+},
+{
+  "_id": {
+    "$oid": "693831f201eb260141576563"
+  },
+  "fecha": "2025-11-29",
+  "id_factura": 4,
+  "precio": 5,
+  "cantidad": 4,
+  "id_planta": 5
+}]
