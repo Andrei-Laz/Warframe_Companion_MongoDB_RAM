@@ -4,6 +4,7 @@ import org.bson.Document
 import java.util.Scanner
 import utility.iteradorNumerosValidosInteger
 import utility.iteradorNumerosValidosDouble
+import utility.iteradorNumerosValidosIntegerPositivos
 
 data class Warframe(
     val warframeID: Int? = null, //this is so because the id is automatically created by the database
@@ -46,7 +47,7 @@ object WarframesDAO {
         val scanner = Scanner(System. `in`)
 
         println("ID del Warframe: ")
-        val id_warframe = iteradorNumerosValidosInteger("El ID")
+        val id_warframe = iteradorNumerosValidosIntegerPositivos("El ID")
         println("Nombre del Warframe: ")
         val nombre = scanner.nextLine()
         println("Vida del Warframe: ")
