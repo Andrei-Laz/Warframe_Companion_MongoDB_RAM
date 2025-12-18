@@ -10,6 +10,7 @@ import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import org.bson.json.JsonWriterSettings
 import org.json.JSONArray
+import utility.iteradorNumerosValidosIntegerPositivos
 import java.io.File
 
 //variables globales definidas sin inicializar
@@ -49,7 +50,9 @@ fun main() {
     importarBD("src/main/resources/florabotanica_plantas.json", coleccionPlantas)
     importarBD("src/main/resources/facturas.json", coleccionFacturas)
 
+    println("")
     menu()
+    println("")
 
     val pipeline = listOf(
         Document("\$lookup", Document()
@@ -79,13 +82,11 @@ fun main() {
     desconectarBDPrueba()
 }
 
-// ****************
-// **** MENÚ   ****
-// ****************
 
 fun menu(){
     //llamada a listar todas las plantas de la BD
     mostrarPlantas()
+    mostrarFactura()
 }
 
 fun mostrarPlantas() {
@@ -172,4 +173,80 @@ fun importarBD(rutaJSON: String, coleccion: MongoCollection<Document>) {
     } catch (e: Exception) {
         println("Error importando documentos: ${e.message}")
     }
+}
+
+fun mostrarFactura() {
+    println("\nId de la factura: ")
+    val idFactura = iteradorNumerosValidosIntegerPositivos("ID de la factura: ")
+
+    // Obtener la fecha de la factura y verificar que la factura indicada existe
+    val facturaDoc = coleccionFacturas
+        .find(Document("id_factura", idFactura))
+        .first()
+
+    if (facturaDoc == null) {
+        println("No existe ninguna factura con ID $idFactura")
+        return
+    }
+
+    val fecha = facturaDoc["fecha"] as String
+
+    // Crear un pipeline de agregación para obtener las líneas de la factura con datos de la planta
+    val pipeline = listOf(
+        Document("\$match", Document("id_factura", idFactura)),
+        Document("\$lookup", Document()
+            .append("from", "plantas")
+            .append("localField", "id_planta")
+            .append("foreignField", "id_planta")
+            .append("as", "planta")
+        ),
+        Document("\$unwind", "\$planta"),
+        Document("\$project", Document()
+            .append("nombre_planta", "\$planta.nombre_comun")
+            .append("cantidad", 1)
+            .append("precio", 1)
+            .append("subtotal", Document("\$multiply", listOf("\$precio", "\$cantidad")))
+        )
+    )
+
+    // Ejecutar la agregación para obtener la lista de líneas
+    val lineas = coleccionFacturas.aggregate(pipeline).toList()
+
+    if (lineas.isEmpty()) {
+        println("No se encontraron líneas para la factura $idFactura")
+        return
+    }
+
+    // Encabezado de la factura
+    println("===============================================================")
+    println("Factura ID: $idFactura")
+    println("Fecha: $fecha")
+    println("---------------------------------------------------------------")
+    println(String.format("%-15s %-10s %-10s %-12s", "Planta", "Cantidad", "Precio", "Subtotal"))
+    println("---------------------------------------------------------------")
+
+    var totalFactura = 0.0
+
+    // Iterar sobre las líneas de la factura
+    lineas.forEach { linea ->
+        val nombre = linea["nombre_planta"] as String
+        val cantidad = linea["cantidad"] as Int
+        val precio = linea["precio"] as Int
+        val subtotal = (linea["subtotal"] as Number).toDouble()
+
+        totalFactura += subtotal
+
+        println(String.format("%-15s %-10d %-10s %-12s",
+            nombre, cantidad, precio, subtotal
+        ))
+    }
+
+    var totalIVA =totalFactura*0.21
+
+    // Mostrar pie de factura con totales
+    println("---------------------------------------------------------------")
+    println(String.format("%-15s %-10s %-10s %-12s", "", "TOTAL:", totalFactura, ""))
+    println(String.format("%-15s %-10s %-10s %-12s", "", "IVA 21%:", totalIVA, ""))
+    println(String.format("%-15s %-10s %-10s %-12s", "", "TOTAL CON IVA:", totalFactura + totalIVA, ""))
+    println("===============================================================")
 }

@@ -12,9 +12,13 @@ private lateinit var servidor: MongoServer
 private lateinit var cliente: MongoClient
 private lateinit var uri: String
 lateinit var coleccionWarframes: MongoCollection<Document>
+lateinit var coleccionMods: MongoCollection<Document>
+lateinit var coleccionSquads: MongoCollection<Document>
 
 private const val NOM_BD = "warframeCompannion"
 private const val NOM_COLECCION_WARFRAMES = "warframes"
+private const val NOM_COLECCION_MODS = "mods"
+private const val NOM_COLECCION_SQUADS = "squads"
 
 fun conectarBD() {
 
@@ -24,6 +28,8 @@ fun conectarBD() {
 
     cliente = MongoClients.create(uri)
     coleccionWarframes = cliente.getDatabase(NOM_BD).getCollection(NOM_COLECCION_WARFRAMES)
+    coleccionMods = cliente.getDatabase(NOM_BD).getCollection(NOM_COLECCION_MODS)
+    coleccionSquads = cliente.getDatabase(NOM_BD).getCollection(NOM_COLECCION_SQUADS)
 
     println("Servidor MongoDB en memoria iniciado en $uri")
 }

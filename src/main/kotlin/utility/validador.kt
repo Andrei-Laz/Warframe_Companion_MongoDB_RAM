@@ -57,7 +57,7 @@ fun iteradorNumerosValidosDouble(descripcionNumero: String): Double {
     return numeroValido
 }
 
-fun iteradorNumerosValidosIntegerDouble(descripcionNumero: String): Double {
+fun iteradorNumerosValidosDoublePositivos(descripcionNumero: String): Double {
     val scanner = Scanner(System. `in`)
     var numValido: Double? = null
     while (numValido == null) {

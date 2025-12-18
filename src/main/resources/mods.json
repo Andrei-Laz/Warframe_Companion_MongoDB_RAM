@@ -1,0 +1,45 @@
+[
+{
+  "_id": {
+    "$oid": "69445937007ad55db7de7774"
+  },
+  "mod_id": 1,
+  "capacity_cost": 14,
+  "name": "Umbral Intensify",
+  "description": "Ability strength +45%, Tau resistence +20%, Scales with mods of the same polarity",
+  "polarity": "Umbral",
+  "rarity": "Legendary"
+},
+{
+  "_id": {
+    "$oid": "69445937007ad55db7de7775"
+  },
+  "mod_id": 2,
+  "capacity_cost": 14,
+  "name": "Primed Continuity",
+  "description": "Ability duration +55%",
+  "polarity": "Madurai",
+  "rarity": "Legendary"
+},
+{
+  "_id": {
+    "$oid": "69445937007ad55db7de7776"
+  },
+  "mod_id": 3,
+  "capacity_cost": 16,
+  "name": "Blind Rage",
+  "description": "Ability Strength +99%, Ability efficiency -66%",
+  "polarity": "Madurai",
+  "rarity": "Rare"
+},
+{
+  "_id": {
+    "$oid": "69445937007ad55db7de7777"
+  },
+  "mod_id": 4,
+  "capacity_cost": 14,
+  "name": "Archon Vitality",
+  "description": "Health +100%, Heat status effects created by abilities apply twice",
+  "polarity": "Vazarin",
+  "rarity": "Legendary"
+}]

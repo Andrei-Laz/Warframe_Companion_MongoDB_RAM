@@ -1,0 +1,28 @@
+[
+{
+  "_id": {
+    "$oid": "69445937007ad55db7de7778"
+  },
+  "squad_id": 1,
+  "warframe_id": 3,
+  "cantidad": 5,
+  "nombre": "Tanks"
+},
+{
+  "_id": {
+    "$oid": "6944597f007ad55db7de7779"
+  },
+  "squad_id": 1,
+  "nombre": "Tanks",
+  "warframe_id": 3,
+  "cantidad": 2
+},
+{
+  "_id": {
+    "$oid": "69445993007ad55db7de777a"
+  },
+  "squad_id": 1,
+  "nombre": "Tanks",
+  "warframe_id": 1,
+  "cantidad": 44
+}]

@@ -74,8 +74,8 @@ object WarframesDAO {
     }
 
     fun actualizarVidaWarframe() {
-        var id_warframe = iteradorNumerosValidosInteger("El ID")
-        var warframe = coleccionWarframes.find(Filters.eq("warframe_id", id_warframe)).firstOrNull()
+        val id_warframe = iteradorNumerosValidosInteger("El ID")
+        val warframe = coleccionWarframes.find(Filters.eq("warframe_id", id_warframe)).firstOrNull()
 
         if (warframe == null) {
             println("No se encontró ningun warframe con ID = \"$id_warframe\".")
@@ -84,7 +84,7 @@ object WarframesDAO {
             println("Warframe encontrado: ${warframe.getString("name")} (vida: ${warframe.get("health")})")
 
             println("La nueva vida sera: ")
-            var vida = iteradorNumerosValidosInteger("La vida")
+            val vida = iteradorNumerosValidosInteger("La vida")
 
             // Actualizar el documento
             val result = coleccionWarframes.updateOne(
@@ -102,7 +102,7 @@ object WarframesDAO {
     fun eliminarWarframe() {
 
         println("ID del warframe a eliminar: ")
-        var id_warframe = iteradorNumerosValidosInteger("El ID")
+        val id_warframe = iteradorNumerosValidosInteger("El ID")
 
         val result = coleccionWarframes.deleteOne(Filters.eq("warframe_id", id_warframe))
         if (result.deletedCount > 0)
